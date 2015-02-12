@@ -1,4 +1,4 @@
-package ru.spbstu.telematics.baluev.lab02;
+package ru.spbstu.telematics.Baluev.lab02;
 
 public interface IStack {
 	

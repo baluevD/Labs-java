@@ -1,66 +1,93 @@
-package ru.spbstu.telematics.baluev.lab02;
+package ru.spbstu.telematics.Baluev.lab02;
 
-import java.util.EmptyStackException;
 import java.util.Iterator;
 
 public class MyStack<T> implements IStack, Iterable<T>{
 	
-	private T[] arr;
-	private int size;
-	private int position;
-	private int currentsize;
-	    
-	public void Stack(){
-		this.currentsize=10;
-        this.position = 0;       
-        this.size=0;
-	    @SuppressWarnings("unchecked")
-		T[] arr = (T[]) new Object[currentsize];
-	}
-	
-	public void push(Object o){
-		if(size==currentsize){
+		private class Node<T>{
+			T element;
+			Node<T> next;
 			
+			public T getElement(){
+				return element;
+			}
+			public Node<T> getNext(){
+				return next;
+			}
+			
+			public void setElement(T element){
+				this.element=element;
+			}
+			public void setNext(Node<T> next){
+				this.next=next;
+			}	
 		}
-		arr[position++] = (T) o;
-	}
-	    
-	public Object pop(){
-	    if (position == 0){
-	    	throw new EmptyStackException();
-	    }
-	    return arr[--position];
-	}
-	
-	private class MyIterator implements Iterator<T>{
-
-		@Override
-		public boolean hasNext() {
-			// TODO Auto-generated method stub
+		
+		private int capacity=0;
+		private Node<T> top;
+		private Node<T> first;
+		
+		public MyStack(){
+			
+			top=null;
+			capacity=0;
+		}
+			
+		public int size(){
+			return capacity;
+		}
+			
+		public boolean isEmpty(){
+			if(top==null)
+				return true;
 			return false;
 		}
 
-		@Override
-		public T next() {
-			// TODO Auto-generated method stub
-			return null;
+		public void push(Object elm){
+			Node<T> nod= new Node<T>() ;		
+			nod.setElement((T) elm);
+			nod.setNext(top);
+			top=nod;
+			capacity++;
+			if(capacity==1){
+				first=nod;
+			}
 		}
-		
-		public MyIterator(){
 			
+		public Object pop(){
+			if(isEmpty()){
+				System.out.println("Stack is empty");					
+				System.exit(0);
+			}
+			Object obj=top.getElement();
+			top=top.getNext();
+			capacity--;
+			return obj;
 		}
 		
-	}
+		public Iterator<T> iterator() {
+			return new MyIterator();
+		}
+		
+		private class MyIterator implements Iterator<T>{
+			Node<T> index;
+			
+			public MyIterator(){
+				index = top;
+			}
 
-	@Override
-	public Iterator<T> iterator() {
-		// TODO Auto-generated method stub
-		return new MyIterator();
-	}
+			public boolean hasNext() {
+				boolean flag;
+				if (flag = (index.next == top)){
+					index = first;
+				}
+				return !flag;
+			}
 
-	@Override
-	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+			public T next() {
+				T elm = index.next.element;
+				index = index.next;
+				return elm;
+			}
+		}	
 }
