@@ -25,10 +25,12 @@ public class Main {
 		System.out.println(stack.size());
 		System.out.println();
 		
-		for (Integer o: stack){
-			System.out.print(o + " ");
-			System.out.println();
-		}
+		stack.pop();		
+		stack.pop();
+		
+		System.out.println(stack.size());
 		System.out.println();
+		
+		stack.pop();
 	}
 }

@@ -25,7 +25,6 @@ public class MyStack<T> implements IStack, Iterable<T>{
 		
 		private int capacity=0;
 		private Node<T> top;
-		private Node<T> first;
 		
 		public MyStack(){
 			
@@ -49,9 +48,6 @@ public class MyStack<T> implements IStack, Iterable<T>{
 			nod.setNext(top);
 			top=nod;
 			capacity++;
-			if(capacity==1){
-				first=nod;
-			}
 		}
 			
 		public Object pop(){
@@ -78,8 +74,8 @@ public class MyStack<T> implements IStack, Iterable<T>{
 
 			public boolean hasNext() {
 				boolean flag;
-				if (flag = (index.next == top)){
-					index = first;
+				if (flag = (index.next == null)){
+					index = top;
 				}
 				return !flag;
 			}
